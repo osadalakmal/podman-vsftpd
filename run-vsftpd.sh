@@ -21,7 +21,15 @@ fi
 mkdir -p "/home/vsftpd/${FTP_USER}"
 chown -R ftp:ftp /home/vsftpd/
 
-echo -e "${FTP_USER}\n${FTP_PASS}" > /etc/vsftpd/virtual_users.txt
+
+# Add by yale
+INIT_USER=`grep $FTP_USER /etc/vsftpd/virtual_users.txt`                                
+if [ ! -n "${INIT_USER}" ];then                           
+echo -e "${FTP_USER}\n${FTP_PASS}" >> /etc/vsftpd/virtual_users.txt                                           
+else                                                      
+    echo ''                                         
+fi                                                        
+
 /usr/bin/db_load -T -t hash -f /etc/vsftpd/virtual_users.txt /etc/vsftpd/virtual_users.db
 
 # Set passive mode parameters:
