@@ -23,7 +23,7 @@ chown -R ftp:ftp /home/vsftpd/
 
 
 # Add by yale
-INIT_USER=`grep $FTP_USER /etc/vsftpd/virtual_users.txt`                                
+export INIT_USER=`grep $FTP_USER /etc/vsftpd/virtual_users.txt`                                
 if [ ! -n "${INIT_USER}" ];then                           
 echo -e "${FTP_USER}\n${FTP_PASS}" >> /etc/vsftpd/virtual_users.txt                                           
 else                                                      
