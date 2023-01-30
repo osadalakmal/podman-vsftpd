@@ -19,7 +19,7 @@ This Docker container implements a vsftpd server, with the following features:
 You can download the image with the following command:
 
 ```bash
-docker pull fauria/vsftpd
+docker pull yale8848/vsftpd:v1.0.0
 ```
 
 Environment variables
