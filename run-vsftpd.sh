@@ -33,6 +33,21 @@ fi
 
 { echo "pasv_address=${PASV_ADDRESS}"; echo "pasv_max_port=${PASV_MAX_PORT}"; echo "pasv_min_port=${PASV_MIN_PORT}"; echo "pasv_addr_resolve=${PASV_ADDR_RESOLVE}"; echo "pasv_enable=${PASV_ENABLE}"; echo "file_open_mode=${FILE_OPEN_MODE}"; echo "local_umask=${LOCAL_UMASK}"; echo "xferlog_std_format=${XFERLOG_STD_FORMAT}"; echo "reverse_lookup_enable=${REVERSE_LOOKUP_ENABLE}"; echo "pasv_promiscuous=${PASV_PROMISCUOUS}"; echo "port_promiscuous=${PORT_PROMISCUOUS}"; echo "listen_port=${LISTEN_PORT}"; } >> /etc/vsftpd/vsftpd.conf
 
+# Add ssl options
+if [ "$SSL_ENABLE" = "YES" ]; then
+	echo "ssl_enable=YES" >> /etc/vsftpd/vsftpd.conf
+	echo "allow_anon_ssl=NO" >> /etc/vsftpd/vsftpd.conf
+	echo "force_local_data_ssl=YES" >> /etc/vsftpd/vsftpd.conf
+	echo "force_local_logins_ssl=YES" >> /etc/vsftpd/vsftpd.conf
+	echo "ssl_tlsv1=YES" >> /etc/vsftpd/vsftpd.conf
+	echo "ssl_sslv2=NO" >> /etc/vsftpd/vsftpd.conf
+	echo "ssl_sslv3=NO" >> /etc/vsftpd/vsftpd.conf
+	echo "require_ssl_reuse=YES" >> /etc/vsftpd/vsftpd.conf
+	echo "ssl_ciphers=HIGH" >> /etc/vsftpd/vsftpd.conf
+	echo "rsa_cert_file=/etc/vsftpd/cert/$TLS_CERT" >> /etc/vsftpd/vsftpd.conf
+	echo "rsa_private_key_file=/etc/vsftpd/cert/$TLS_KEY" >> /etc/vsftpd/vsftpd.conf
+fi
+
 # Get log file path
 LOG_FILE=$(grep xferlog_file /etc/vsftpd/vsftpd.conf|cut -d= -f2)
 export LOG_FILE
